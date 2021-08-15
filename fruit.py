@@ -10,6 +10,7 @@
 
 cart_list = []
 fruitsshop = {}
+bill = {}
 
 
 def menu():
@@ -111,6 +112,10 @@ def update_fruit():
 def cart_menu():
 	print("\t a. Add to Cart")
 	print("\t b. Display Cart")
+	print("\t c. Delete From cart")
+	print("\t d. Buy Items")
+	print("\t e. Display Bill")
+	print("\t f. Exit")
 
 def display_cart():
 	for i in cart_list:
@@ -121,20 +126,50 @@ def display():
 		print(f"{fid} : {values}\n")
 
 def addtocart_function():
-	num = int(input("\tEnter the fruitid to add"))
+	num = int(input("\t\tEnter the fruitid to add"))
 	if num in fruitsshop.keys():
 		cart_list.append(num)
 	else:
 		print("\tInvalid ID")
+def delete_from_cart():
+	display_cart()
+	num = int(input("\t\tEnter the fruitid to add"))
+	if num in cart_list:
+		print (num)
+		cart_list.remove(num)
+def delete_from_cart_afterbuy(i):
+	cart_list.remove(i)
+	
+def buy_items():
+	display_cart()
+	count = 0
+	sum_rate = 0
+	for i in cart_list:
+		count=count+1
+		sum_rate = sum_rate + int(fruitsshop[i]['rate'])
+		bill[count] = fruitsshop[i]
+		delete_from_cart_afterbuy(i)
+
+def print_bill():
+	print(bill)		
 def add_to_cart():
 	for fid,values in fruitsshop.items():
 		print(f"{fid} : {values}\n")
+	while True:	
 		cart_menu()
 		choice = input("\tEnter the choice")
 		if choice == "a":
 			addtocart_function()
 		elif choice == "b":
 			display_cart()
+		elif choice == "c":
+			delete_from_cart()
+		elif choice == "d":
+			buy_items()
+		elif choice == "e":
+			print_bill()
+		elif choice == "f":
+			break
 		else:
 			print("\tInvalid Choice")
 while True :
